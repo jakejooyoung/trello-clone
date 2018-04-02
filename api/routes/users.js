@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-// router specific middleware
+// route specific middleware
 router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now())
   next()
@@ -20,8 +20,9 @@ router.param('user_id', function(req, res, next, id) {
   next();
 });
 
-// route specific middleware
+
 router.route('/:user_id')
+	// route specific middleware
 	.all(function(req,res,next){
 		console.log(req.user)
 		next();
@@ -39,7 +40,7 @@ router.route('/:user_id')
 	.delete(function(req, res, next) {
 	  next(new Error('not implemented'));
 	});
-	
+
 module.exports = router;
 
 
