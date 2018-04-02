@@ -1,0 +1,10 @@
+{
+  "name": "trello-mockup",
+  "version": "1.0.0",
+  "description": "Trello mockup by jknpg.",
+  "main": "index.js",
+  "repository": "git@bitbucket.org:npgains/trello-mockup.git",
+  "author": "Jake Kim <jake@npgains.com>",
+  "license": "Apache 2.0",
+  "private": true
+}
