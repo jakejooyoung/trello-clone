@@ -22,7 +22,7 @@
     "react-icons": "^2.2.3",
     "react-stack-grid": "^0.2.0",
     "sequelize": "^4.37.5",
-    "webpack": "^3.8.1"
+    "webpack": "^3.10.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

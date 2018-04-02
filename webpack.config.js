@@ -6,7 +6,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 const path = require("path");
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: __dirname + "/client/index.html",
+  template: __dirname + "/src/index.html",
   filename: "index.html",
   inject: "body",
   links: [
@@ -14,9 +14,9 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   ]
 });
 const config = {
-  entry: "./client/index.js",
+  entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, "static"),
+    path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
   },
   module: {
