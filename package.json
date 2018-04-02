@@ -15,7 +15,14 @@
     "react-dom": "^15.4.2",
     "react-icons": "^2.2.3",
     "react-stack-grid": "^0.2.0",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.0",
+    "mysql2": "^1.5.3",
+    "sequelize": "^4.37.5"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
@@ -28,7 +35,10 @@
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
     "uglify-js-plugin": "^0.0.6",
-    "webpack-dev-server": "^2.4.2"
+    "webpack-dev-server": "^2.4.2",
+    "babel-cli": "^6.26.0",
+    "nodemon": "^1.17.2",
+    "sequelize-cli": "^4.0.0"
   },
   "scripts": {
     "start": "webpack-dev-server",
