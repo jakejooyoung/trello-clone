@@ -20,7 +20,6 @@ router.param('user_id', function(req, res, next, id) {
   next();
 });
 
-
 router.route('/:user_id')
 	// route specific middleware
 	.all(function(req,res,next){
