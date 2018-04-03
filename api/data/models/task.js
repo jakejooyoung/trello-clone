@@ -15,19 +15,19 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     completedAt: {
-    	field: 'completed_at',
-    	type: DataTypes.DATE
+      field: 'completed_at',
+      type: DataTypes.DATE,
     },
     createdAt: {
-    	field: 'created_at',
-    	type: DataTypes.DATE
+      field: 'created_at',
+      type: DataTypes.DATE,
     },
     updatedAt: {
-    	field: 'updated_at',
-    	type: DataTypes.DATE,
-    }
+      field: 'updated_at',
+      type: DataTypes.DATE,
+    },
   });
-  Task.associate = function(models) {
+  Task.associate = function (models) {
     Task.belongsTo(models.Column, {
       onDelete: 'CASCADE',
       foreignKey: 'column_id',

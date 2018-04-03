@@ -1,17 +1,19 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+
+const router = express.Router();
 const models = require('../data/models');
 
 import Sequelize from 'sequelize';
+
 const { Op } = Sequelize;
 
 // middleware that is specific to this router
-router.use(function timeLog (req, res, next) {
-  console.log('Time: ', Date.now())
-  next()
-})
+router.use((req, res, next) => {
+  console.log('Time: ', Date.now());
+  next();
+});
 
-router.get('/', function (req, res,next) {
+router.get('/', (req, res, next) => {
   // Should be checking auth, if not signed in redirect to signup.
   const asy = async () => {
     const boards = await models.Board.findAll();
@@ -22,17 +24,17 @@ router.get('/', function (req, res,next) {
   asy().catch(next);
 });
 
-router.param('boardId', function(req, res, next) {
+router.param('boardId', (req, res, next) => {
   next();
 });
 
 router.route('/:boardId')
   // route specific middleware
-  .all(function(req,res,next){
+  .all((req, res, next) => {
     next();
   })
-  .get(function(req, res, next) {
-    console.log(req.params.boardId)
+  .get((req, res, next) => {
+    console.log(req.params.boardId);
     const asy = async () => {
       const board = await models.Board.findAll({
         where: {
@@ -47,14 +49,16 @@ router.route('/:boardId')
     };
     asy().catch(next);
   })
-  .put(function(req, res, next) {
+  .put((req, res, next) => {
     next(new Error('not implemented'));
   })
-  .post(function(req, res, next) {
-    next(new Error('not implemented'));
+  .post((req, res, next) => {
+    models.Board.create(req.body).then((board) => {
+      res.send(board);
+    });
   })
-  .delete(function(req, res, next) {
+  .delete((req, res, next) => {
     next(new Error('not implemented'));
   });
-  
+
 module.exports = router;

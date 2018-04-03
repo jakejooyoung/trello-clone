@@ -1,25 +1,25 @@
 module.exports = (sequelize, DataTypes) => {
-  var Column = sequelize.define('Column', {
+  const Column = sequelize.define('Column', {
     userId: {
       field: 'user_id',
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     boardId: {
       field: 'board_id',
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     createdAt: {
-    	field: 'created_at',
-    	type: DataTypes.DATE
+      field: 'created_at',
+      type: DataTypes.DATE,
     },
     updatedAt: {
-    	field: 'updated_at',
-    	type: DataTypes.DATE,
-    }
+      field: 'updated_at',
+      type: DataTypes.DATE,
+    },
   });
-  Column.associate = function(models) {
+  Column.associate = function (models) {
     Column.belongsTo(models.Board, {
       onDelete: 'CASCADE',
       foreignKey: 'board_id',
@@ -28,7 +28,9 @@ module.exports = (sequelize, DataTypes) => {
     	onDelete: 'CASCADE',
       foreignKey: 'user_id',
     });
-    Column.hasMany(models.Task, { foreignKey: 'column_id' });
+    Column.hasMany(models.Task, {
+      foreignKey: 'column_id',
+    });
   };
   return Column;
 };
