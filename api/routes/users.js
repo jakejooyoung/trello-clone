@@ -1,5 +1,9 @@
 const express = require('express')
 const router = express.Router()
+const models = require('../data/models');
+
+import Sequelize from 'sequelize';
+const { Op } = Sequelize;
 
 // route specific middleware
 router.use(function timeLog (req, res, next) {
@@ -7,8 +11,15 @@ router.use(function timeLog (req, res, next) {
   next()
 })
 
-router.get('/', function (req, res) {
-   res.send("Check auth, if not signed in redirect to signup.");
+router.get('/', function (req, res,next) {
+	// Should be checking auth, if not signed in redirect to signup.
+	const asy = async () => {
+    const users = await models.User.findAll();
+    if (users) {
+      res.send(users);
+    }
+  };
+  asy().catch(next);
 })
 
 router.param('user_id', function(req, res, next, id) {

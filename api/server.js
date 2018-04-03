@@ -15,6 +15,11 @@ app.get('/', (req, res) => {
 
 route(app);
 
+// const server = require('./data/models').sequelize.sync().then(function() {
+// 	return app.listen(port, () => {
+// 		console.log('App listening on port %s', port);
+// 	});
+// });
 const server = app.listen(port, () => {
 	console.log('App listening on port %s', port);
 });
