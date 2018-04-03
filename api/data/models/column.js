@@ -12,14 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     createdAt: {
-    	field: 'create_at',
+    	field: 'created_at',
     	type: DataTypes.DATE,
     	defaultValue: sequelize.literal('NOW()')
     },
     updatedAt: {
     	field: 'updated_at',
     	type: DataTypes.DATE,
-    	defaultValue: defaultValue: sequelize.literal('NOW()'),
+    	defaultValue: sequelize.literal('NOW()'),
     }
   },{
   	timestamps:true
