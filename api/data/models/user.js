@@ -10,7 +10,20 @@ module.exports = (sequelize, DataTypes) => {
       field: 'last_name',
       type: DataTypes.STRING,
     },
-  }, {});
+    description: DataTypes.TEXT,
+    createdAt: {
+    	field: 'create_at',
+    	type: DataTypes.DATE,
+    	defaultValue: sequelize.literal('NOW()')
+    },
+    updatedAt: {
+    	field: 'updated_at',
+    	type: DataTypes.DATE,
+    	defaultValue: defaultValue: sequelize.literal('NOW()'),
+    }
+  }, {
+  	timestamps:true
+  });
   User.associate = function(models) {
     User.hasMany(models.Board);
 	  User.hasMany(models.Column);

@@ -11,9 +11,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-  }, {});
+    createdAt: {
+    	field: 'create_at',
+    	type: DataTypes.DATE,
+    	defaultValue: sequelize.literal('NOW()')
+    },
+    updatedAt: {
+    	field: 'updated_at',
+    	type: DataTypes.DATE,
+    	defaultValue: defaultValue: sequelize.literal('NOW()'),
+    }
+  },{
+  	timestamps:true
+  });
   Column.associate = function(models) {
     Column.belongsTo(models.Board, {
       onDelete: 'CASCADE',

@@ -22,14 +22,18 @@ module.exports = {
         type: Sequelize.STRING
       },
       description: Sequelize.TEXT,
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
       updatedAt: {
+        field: 'updated_at',
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue:Sequelize.fn('NOW'),
       },
+      createdAt: {
+        field: 'created_at',
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue:Sequelize.fn('NOW'),
+      }
     });
   },
   down: (queryInterface, Sequelize) => {

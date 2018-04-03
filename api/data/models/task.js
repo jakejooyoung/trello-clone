@@ -15,10 +15,22 @@ module.exports = (sequelize, DataTypes) => {
     },
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
-    completedAt: DataTypes.DATE,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-  }, {});
+    completed_at: {
+    	field: 'completed_at',
+    	type: DataTypes.DATE
+    },
+    createdAt: {
+    	field: 'create_at',
+    	type: DataTypes.DATE,
+    	defaultValue: sequelize.literal('NOW()')
+    },
+    updatedAt: {
+    	field: 'updated_at',
+    	type: DataTypes.DATE,
+    }
+  },{
+  	timestamps:true
+  });
   Task.associate = function(models) {
     Task.belongsTo(models.Column, {
       onDelete: 'CASCADE',

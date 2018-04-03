@@ -41,13 +41,23 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
-      createdAt: {
-        allowNull: false,
+      description: Sequelize.TEXT,
+      completedAt: {
+        field: 'completed_at',
+        allowNull: true,
         type: Sequelize.DATE
       },
       updatedAt: {
+        field: 'updated_at',
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue:Sequelize.fn('NOW'),
+      },
+      createdAt: {
+        field: 'created_at',
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue:Sequelize.fn('NOW'),
       }
     });
   },
