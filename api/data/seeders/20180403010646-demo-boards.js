@@ -8,17 +8,17 @@ module.exports = {
         {
           user_id:1,
           title: 'MyTime Tasks',
-          description: 'MyTime's task management board.'
+          description: 'MyTime\'s task management board.'
         },
         {
           user_id:2,
           title: 'Emanuel\'s Tasks',
-          description: 'Emanuel's task management board.'
+          description: 'Emanuel\'s task management board.'
         },
         {
           user_id:3,
           title: 'Cashew Pay Tasks',
-          description: 'CashewPay's task management board.'
+          description: 'CashewPay\'s task management board.'
         },
         {
           user_id:3,
