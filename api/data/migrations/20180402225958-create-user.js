@@ -1,11 +1,11 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', {
+  up: (queryInterface, Sequelize) =>
+    queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       email: Sequelize.STRING,
       firstName: {
@@ -20,17 +20,15 @@ module.exports = {
         field: 'updated_at',
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue:Sequelize.fn('NOW'),
+        defaultValue: Sequelize.fn('NOW'),
       },
       createdAt: {
         field: 'created_at',
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue:Sequelize.fn('NOW'),
-      }
-    });
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
-  }
+        defaultValue: Sequelize.fn('NOW'),
+      },
+    }),
+  down: (queryInterface, Sequelize) =>
+    queryInterface.dropTable('users'),
 };

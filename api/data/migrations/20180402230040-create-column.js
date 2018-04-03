@@ -1,51 +1,49 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('columns', {
+  up: (queryInterface, Sequelize) =>
+    queryInterface.createTable('columns', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       userId: {
         type: Sequelize.INTEGER,
         field: 'user_id',
         references: {
           model: 'users',
-          key: 'id'
+          key: 'id',
         },
         onUpdate: 'cascade',
-        onDelete: 'cascade'
+        onDelete: 'cascade',
       },
       boardId: {
         type: Sequelize.INTEGER,
         field: 'board_id',
         references: {
           model: 'boards',
-          key: 'id'
+          key: 'id',
         },
         onUpdate: 'cascade',
-        onDelete: 'cascade'
+        onDelete: 'cascade',
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       description: Sequelize.TEXT,
       updatedAt: {
         field: 'updated_at',
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue:Sequelize.fn('NOW'),
+        defaultValue: Sequelize.fn('NOW'),
       },
       createdAt: {
         field: 'created_at',
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue:Sequelize.fn('NOW'),
-      }
-    });
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('columns');
-  }
+        defaultValue: Sequelize.fn('NOW'),
+      },
+    }),
+  down: (queryInterface, Sequelize) =>
+    queryInterface.dropTable('columns'),
 };
