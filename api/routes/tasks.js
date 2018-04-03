@@ -19,11 +19,11 @@ router.get('/', function (req, res,next) {
 router.route('/')
   // route specific middleware
   .all(function(req,res,next){
-    console.log("You've reached /tasks route.");
+    console.log('You\'ve reached /tasks route.');
     next();
   })
   .get(function(req, res, next) {
-    res.send("Hello from the /tasks route");
+    res.send('Hello from the /tasks route');
   })
   .put(function(req, res, next) {
     next(new Error('not implemented'));

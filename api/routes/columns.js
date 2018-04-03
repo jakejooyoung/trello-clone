@@ -4,11 +4,11 @@ const router = express.Router()
 router.route('/')
   // route specific middleware
   .all(function(req,res,next){
-    console.log("You've reached /columns route.");
+    console.log('You\'ve reached /columns route.');
     next();
   })
   .get(function(req, res, next) {
-    res.send("Hello from the /columns route");
+    res.send('Hello from the /columns route');
   })
   .put(function(req, res, next) {
     next(new Error('not implemented'));
