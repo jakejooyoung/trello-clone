@@ -13,20 +13,16 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: {
     	field: 'created_at',
     	type: DataTypes.DATE,
-    	defaultValue: sequelize.literal('NOW()')
     },
     updatedAt: {
     	field: 'updated_at',
     	type: DataTypes.DATE,
-    	defaultValue: sequelize.literal('NOW()'),
     }
-  }, {
-  	timestamps:true
   });
   User.associate = function(models) {
-    User.hasMany(models.Board);
-	  User.hasMany(models.Column);
-    User.hasMany(models.Task);
+    User.hasMany(models.Board, { foreignKey: 'user_id' });
+	  User.hasMany(models.Column, { foreignKey: 'user_id' });
+    User.hasMany(models.Task, { foreignKey: 'user_id' });
 	};
   return User;
 };

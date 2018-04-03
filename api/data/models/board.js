@@ -3,30 +3,26 @@ module.exports = (sequelize, DataTypes) => {
   var Board = sequelize.define('Board', {
     userId: {
       field: 'user_id',
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     createdAt: {
     	field: 'created_at',
-    	type: DataTypes.DATE,
-    	defaultValue: sequelize.literal('NOW()')
+    	type: DataTypes.DATE
     },
     updatedAt: {
     	field: 'updated_at',
     	type: DataTypes.DATE,
-    	defaultValue: sequelize.literal('NOW()'),
     }
-  },{
-  	timestamps:true
   });
   Board.associate = function(models) {
     Board.belongsTo(models.User, {
       onDelete: 'CASCADE',
-      foreignKey: 'user_id',
+      foreignKey: 'user_id'
     });
-    Board.hasMany(models.Task);
-    Board.hasMany(models.Column);
+    Board.hasMany(models.Task, { foreignKey: 'board_id' });
+    Board.hasMany(models.Column, { foreignKey: 'board_id' });
   };
   return Board;
 };

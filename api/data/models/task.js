@@ -15,21 +15,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
-    completed_at: {
+    completedAt: {
     	field: 'completed_at',
     	type: DataTypes.DATE
     },
     createdAt: {
     	field: 'created_at',
-    	type: DataTypes.DATE,
-    	defaultValue: sequelize.literal('NOW()')
+    	type: DataTypes.DATE
     },
     updatedAt: {
     	field: 'updated_at',
     	type: DataTypes.DATE,
     }
-  },{
-  	timestamps:true
   });
   Task.associate = function(models) {
     Task.belongsTo(models.Column, {

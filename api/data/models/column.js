@@ -3,26 +3,22 @@ module.exports = (sequelize, DataTypes) => {
   var Column = sequelize.define('Column', {
     userId: {
       field: 'user_id',
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     boardId: {
       field: 'board_id',
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     createdAt: {
     	field: 'created_at',
-    	type: DataTypes.DATE,
-    	defaultValue: sequelize.literal('NOW()')
+    	type: DataTypes.DATE
     },
     updatedAt: {
     	field: 'updated_at',
     	type: DataTypes.DATE,
-    	defaultValue: sequelize.literal('NOW()'),
     }
-  },{
-  	timestamps:true
   });
   Column.associate = function(models) {
     Column.belongsTo(models.Board, {
@@ -33,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     	onDelete: 'CASCADE',
       foreignKey: 'user_id',
     });
-    Column.hasMany(models.Task);
+    Column.hasMany(models.Task, { foreignKey: 'column_id' });
   };
   return Column;
 };
