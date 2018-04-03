@@ -48,6 +48,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack"
+    "build": "webpack",
+    "lint":"./node_modules/.bin/eslint src api"
   }
 }
