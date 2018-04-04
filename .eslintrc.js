@@ -9,4 +9,7 @@ module.exports = {
     'document': true,
     'window': true,
   },
+  'env': {
+    'jest': true
+	}
 };
