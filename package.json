@@ -47,6 +47,7 @@
     "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
+    "api": "nodemon api/server.js --exec babel-node --presets env",
     "start": "webpack-dev-server",
     "build": "webpack",
     "lint":"./node_modules/.bin/eslint src api"
