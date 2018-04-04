@@ -21,7 +21,7 @@ router.get('/', (req, res, next) => {
       },
     });
     if (boards) {
-      res.send(boards);
+      res.json(boards);
     }
   };
   asy().catch(next);
