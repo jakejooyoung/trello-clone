@@ -9,7 +9,7 @@ const models = require('../data/models');
 router.get('/', (req, res, next) => {
   // Should be checking auth, if not signed in redirect to signup.
   const parentParam = Object.getOwnPropertyNames(req.params)[0];
-  if (!parentParam){
+  if (!parentParam) {
     res.redirect('/users');
   }
   const asy = async () => {
