@@ -33,11 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'column_id',
     });
     Task.belongsTo(models.Board, {
-    	onDelete: 'CASCADE',
+      onDelete: 'CASCADE',
       foreignKey: 'board_id',
     });
     Task.belongsTo(models.User, {
-    	onDelete: 'CASCADE',
+      onDelete: 'CASCADE',
       foreignKey: 'user_id',
     });
   };

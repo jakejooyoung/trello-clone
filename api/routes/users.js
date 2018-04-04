@@ -1,16 +1,10 @@
+import Sequelize from 'sequelize';
+
+const { Op } = Sequelize;
 const express = require('express');
 
 const router = express.Router();
 const models = require('../data/models');
-
-import Sequelize from 'sequelize';
-
-const { Op } = Sequelize;
-
-// route specific middleware
-router.use((req, res, next) => {
-  next();
-});
 
 router.get('/', (req, res, next) => {
   // Should be checking auth, if not signed in redirect to signup.
@@ -23,32 +17,40 @@ router.get('/', (req, res, next) => {
   asy().catch(next);
 });
 
-router.param('user_id', (req, res, next, id) => {
-  // sample user, would actually get user from DB
-  req.user = {
-    id,
-    name: 'Jake',
-  };
-  next();
-});
-
-router.route('/:user_id')
+router.route('/:userId')
 // route specific middleware
   .all((req, res, next) => {
-    next();
+    const asy = async () => {
+      const user = await models.User.findAll({
+        where: {
+          id: {
+            [Op.eq]: req.params.userId,
+          },
+        },
+      });
+      if (user) {
+        res.send(user);
+      }
+    };
+    asy().catch(next);
   })
   .get((req, res, next) => {
-	  res.send(`User ID: ${JSON.stringify(req.user)}`);
+    res.send(`User ID: ${JSON.stringify(req.user)}`);
+    next();
   })
   .put((req, res, next) => {
 	  next(new Error('not implemented'));
   })
   .post((req, res, next) => {
-	  next(new Error('not implemented'));
+    next(new Error('not implemented'));
   })
   .delete((req, res, next) => {
-	  next(new Error('not implemented'));
+    next(new Error('not implemented'));
   });
+
+router.use('/:userId/boards', require('./boards'));
+router.use('/:userId/columns', require('./columns'));
+router.use('/:userId/tasks', require('./tasks'));
 
 module.exports = router;
 

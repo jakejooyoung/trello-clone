@@ -10,17 +10,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
     createdAt: {
-    	field: 'created_at',
-    	type: DataTypes.DATE,
+      field: 'created_at',
+      type: DataTypes.DATE,
     },
     updatedAt: {
-    	field: 'updated_at',
-    	type: DataTypes.DATE,
+      field: 'updated_at',
+      type: DataTypes.DATE,
     },
   });
   User.associate = function (models) {
     User.hasMany(models.Board, { foreignKey: 'user_id' });
-	  User.hasMany(models.Column, { foreignKey: 'user_id' });
+    User.hasMany(models.Column, { foreignKey: 'user_id' });
     User.hasMany(models.Task, { foreignKey: 'user_id' });
   };
   return User;

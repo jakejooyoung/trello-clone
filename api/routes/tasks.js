@@ -1,16 +1,22 @@
-const express = require('express');
-
-const router = express.Router();
-const models = require('../data/models');
-
 import Sequelize from 'sequelize';
 
 const { Op } = Sequelize;
+const express = require('express');
+
+const router = express.Router({ mergeParams: true });
+const models = require('../data/models');
 
 router.get('/', (req, res, next) => {
   // Should be checking auth, if not signed in redirect to signup.
+  const parentParam = Object.getOwnPropertyNames(req.params)[0];
   const asy = async () => {
-    const tasks = await models.Task.findAll();
+    const tasks = await models.Task.findAll({
+      where: {
+        [parentParam]: {
+          [Op.eq]: req.params[parentParam],
+        },
+      },
+    });
     if (tasks) {
       res.send(tasks);
     }
@@ -18,11 +24,22 @@ router.get('/', (req, res, next) => {
   asy().catch(next);
 });
 
-router.route('/')
+router.route('/:taskId')
   // route specific middleware
   .all((req, res, next) => {
-    console.log('You\'ve reached /tasks route.');
-    next();
+    const asy = async () => {
+      const task = await models.Task.findAll({
+        where: {
+          id: {
+            [Op.eq]: req.params.taskId,
+          },
+        },
+      });
+      if (task) {
+        res.send(task);
+      }
+    };
+    asy().catch(next);
   })
   .get((req, res, next) => {
     res.send('Hello from the /tasks route');

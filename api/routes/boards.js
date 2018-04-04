@@ -1,31 +1,27 @@
-const express = require('express');
-
-const router = express.Router();
-const models = require('../data/models');
-
 import Sequelize from 'sequelize';
 
 const { Op } = Sequelize;
+const express = require('express');
 
-// middleware that is specific to this router
-router.use((req, res, next) => {
-  console.log('Time: ', Date.now());
-  next();
-});
+const router = express.Router({ mergeParams: true });
+const models = require('../data/models');
 
 router.get('/', (req, res, next) => {
   // Should be checking auth, if not signed in redirect to signup.
+  const parentParam = Object.getOwnPropertyNames(req.params)[0];
   const asy = async () => {
-    const boards = await models.Board.findAll();
-    if (boards) {
-      res.send(boards);
+    const columns = await models.Column.findAll({
+      where: {
+        [parentParam]: {
+          [Op.eq]: req.params[parentParam],
+        },
+      },
+    });
+    if (columns) {
+      res.send(columns);
     }
   };
   asy().catch(next);
-});
-
-router.param('boardId', (req, res, next) => {
-  next();
 });
 
 router.route('/:boardId')
@@ -60,5 +56,8 @@ router.route('/:boardId')
   .delete((req, res, next) => {
     next(new Error('not implemented'));
   });
+
+router.use('/:boardId/columns', require('./columns'));
+router.use('/:boardId/tasks', require('./tasks'));
 
 module.exports = router;
