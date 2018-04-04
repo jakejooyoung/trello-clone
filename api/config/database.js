@@ -12,8 +12,8 @@ module.exports = {
   },
   test: {
     username: 'root',
-    password: null,
-    database: 'trello-testdb',
+    password: 'root',
+    database: 'trello-devdb',
     host: '127.0.0.1',
     dialect: 'mysql',
     operatorsAliases: Sequelize.Op,
