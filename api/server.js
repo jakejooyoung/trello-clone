@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.send('Welcome to Trello Mockup API Server');
+  res.send('Hello World! Welcome to Trello Mockup API Server');
 });
 
 route(app);

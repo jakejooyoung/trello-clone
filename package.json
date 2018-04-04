@@ -37,12 +37,14 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "extract-text-webpack-plugin": "^2.1.0",
+    "jest": "^22.4.3",
     "json-loader": "^0.5.4",
     "node-sass": "^4.5.0",
     "nodemon": "^1.17.2",
     "sass-loader": "^6.0.3",
     "sequelize-cli": "^4.0.0",
     "style-loader": "^0.16.1",
+    "supertest": "^3.0.0",
     "uglify-js-plugin": "^0.0.6",
     "webpack-dev-server": "^2.4.2"
   },
@@ -50,6 +52,7 @@
     "api": "nodemon api/server.js --exec babel-node --presets env",
     "start": "webpack-dev-server",
     "build": "webpack",
-    "lint":"./node_modules/.bin/eslint src api"
+    "lint": "./node_modules/.bin/eslint src api",
+    "test": "./node_modules/.bin/jest --watch"
   }
 }
