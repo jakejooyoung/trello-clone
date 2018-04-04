@@ -1,14 +1,14 @@
 import request from 'supertest';
 import app from '../../server';
 
-describe('trello api', function() {
-  it('returns hello world', function(done) {
+describe('Trello Mockup API index', () => {
+  it('returns hello world', (done) => {
     request(app)
       .get('/')
       .expect(200, done);
   });
-  afterAll(done => {
-		app.close();
-		done();
-	});
+  afterAll((done) => {
+    app.close();
+    done();
+  });
 });
