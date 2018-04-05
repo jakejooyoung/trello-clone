@@ -46,6 +46,9 @@ export default class Column extends React.Component {
     	<div className="columnContainer">
         <div className={"column "+(column?"":"add")}>
           <div className="title"> 
+            <div className="addButton">
+              +
+            </div>
             <div className="vertMid">
               {title}
             </div>

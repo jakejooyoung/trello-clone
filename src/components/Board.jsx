@@ -47,9 +47,6 @@ export default class Board extends React.Component {
             />
           )
         }
-        <Column 
-          boardId={board.id}
-          />
       </div>
     );
   }

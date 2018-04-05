@@ -124,7 +124,7 @@ export default class App extends React.Component {
 								value="Submit" 
 								name="boardSubmit" 
 								onClick={(e)=>this.handleSubmit(userId,e)}> 
-								Create Board
+								Create New Board
 							</button>
 						</form>
 					</div>
