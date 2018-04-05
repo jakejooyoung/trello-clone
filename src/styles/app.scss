@@ -141,25 +141,29 @@ body{
 	.task {
 	  padding: 14px;
 	  padding-top:0;
-	  margin:10px;
-	  background: #fff;
+	  margin:10px;	  
 	  border-radius: 3px;
 	  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
 	  color:#001d2f;
+	  background:rgba(230, 230, 230, 0.1);
+	  background: #fdfdfd;
 	  // color: var(--primary-color);
 	  .title{
+	  	font-weight: 400;
 			font-size:14px;
 			font-color:black;
 			padding:6px 0;
 			text-align: left;
+			border-radius: 0;
+			background-color: inherit;
 	  }
 	  .description{
 			font-size:11px;
 			font-color:var(--border-color);
 	  }
 	  &:hover{
-	  	background:rgba(230, 230, 230, 0.1);
 	  	color: #0079ff;
+	  	background: #fff;
 	  }
 		&.selected{
 			border: 1px solid var(--link-color);
