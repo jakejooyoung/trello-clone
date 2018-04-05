@@ -44,14 +44,15 @@ export default class App extends React.Component {
 	// On selection, mount and fetch data to render board view for selected boardId.
 	render() {
 		const { boards }=this.state;
-		console.log(boards[0]);
+
+		const getClassName=(a,b)=>"boardPreview "+(a===b?"selected":"");
 		return (
-			<div className='app row' style={{'backgroundColor':'grey'}}>
+			<div className='app' style={{'backgroundColor':'grey'}}>
 				<div className="boardsList">		
 					{ boards.map(board=>
 							<div 
 								key={board.id} 
-								className="boardPreview"
+								className={getClassName(board.id,this.state.selectedId)}
 								onClick={(e)=>this.handleClick(board.id,e)}>
 				        <a>{board.title}</a>
 			      	</div>
