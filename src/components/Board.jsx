@@ -12,7 +12,7 @@ export default class Board extends React.Component {
 
   componentDidMount(event) {
     // Fetch Columns for Board
-    const url = 'api/boards/'+this.props.boardId+'/columns';
+    const url = 'api/boards/'+this.props.board.id+'/columns';
     const init = {  
       method : 'GET',
       headers: new Headers({
@@ -35,26 +35,26 @@ export default class Board extends React.Component {
 
   render() {
     // Board-view contains Columns
-    const board=this.props;
+    const board=this.props.board;
     const { columns }=this.state;
-
     return (
     	<div className="board" style={{'backgroundColor':'beige'}}>
-        <div> 
-          Board Id: {board.boardId}
-        </div>
-        <div>
-          Board Title: {board.title}
-        </div>
-        {
-          columns.map(column=>
+          {
+            columns.map(column=>
+              <div key={column.id} className="columnContainer">
+                <Column 
+                  className="column"
+                  column={column}
+                  boardId={board.id}
+                  />
+              </div>)
+          }
+          <div className="columnContainer">
             <Column 
-              key={column.id} 
-              columnId={column.id}
-              title={column.title}
-              description={column.description}/>
-          )
-        }
+              className="column add"
+              boardId={board.id}
+              />
+          </div>
       </div>
     );
   }

@@ -11,42 +11,50 @@ export default class Column extends React.Component {
   }
 
   componentDidMount(event) {
-    // Fetch all Tasks for Column
-    const url = 'api/columns/'+this.props.columnId+'/tasks';
-    const init = {  
-      method : 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }),
+    // If a column object was passed in as a prop
+    if (this.props.column){
+      // Fetch all Tasks for Column
+      const url = 'api/columns/'+this.props.column.id+'/tasks';
+      const init = {  
+        method : 'GET',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }),
+      }
+      const req = new Request(url, init);
+      fetch(req)
+        .then(res => {
+          if (res.status >= 400) {
+            throw new Error("Bad response from server");
+          }
+          console.log(res);
+          return res.json();
+        })
+        .then(json => this.setState({ 'tasks' : json, }))
+        .catch(err => console.log("ERROR! " + err ))
     }
-    const req = new Request(url, init);
-    fetch(req)
-      .then(res => {
-        if (res.status >= 400) {
-          throw new Error("Bad response from server");
-        }
-        console.log(res);
-        return res.json();
-      })
-      .then(json => this.setState({ 'tasks' : json, }))
-      .catch(err => console.log("ERROR! " + err ))
+    // If not, render just the placeholder ui.
   }
 
   render() {
     // Column-view contains Tasks
-    const column=this.props;
+    const column=this.props.column;
     const { tasks }=this.state;
-
+    const title=(column)?column.title:"+";
     return (
-    	<div style={{'color':'red'}}>
-        <div> Column id: {column.columnId} </div>
-        <div> Column title: {column.title} </div>
-        <div> Column description: {column.description} </div>
+    	<div className={this.props.className}>
+        <div className="title"> 
+          <div className="vertMid">
+            {title}
+          </div>
+        </div>
         {
           tasks.map(task=>
-            <Task className="task" key={task.id} taskId={task.id}/>
-          )
+            <Task 
+              key={task.id}
+              className="task" 
+              task={task}/>)
         }
       </div>
     );

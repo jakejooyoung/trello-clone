@@ -7,12 +7,13 @@ export default class App extends React.Component {
 		super(props);
 		this.state={
 			boards:[],
+			selectedId:0,
 		}
 	}
 	componentDidMount() {
 		// Let's assume we're signed in as user with id: 3 for now.
 		// Get all boards for user 3
-	  const url='api/users/1/boards/';
+	  const url='api/users/3/boards/';
 	  const init = {  
 	  	method : 'GET',
 	    headers: new Headers({
@@ -28,30 +29,44 @@ export default class App extends React.Component {
         }
         return res.json();
       })
-      .then(json =>this.setState({ 'boards' : json, }))
+      .then(json => 
+      	this.setState({ 
+      		'boards': json,
+      		'selectedId': json[0].id
+      	}))
       .catch(err => console.log("ERROR! " + err ))
 
   }
-
+  handleClick(boardId){
+  	this.setState({ 'selectedId' : boardId, })
+  }
+  // Show list of Boards for user.
+	// On selection, mount and fetch data to render board view for selected boardId.
 	render() {
 		const { boards }=this.state;
-		// Show list of Boards for user.
-		// On selection, mount and fetch data to render board view for selected boardId.
+		console.log(boards[0]);
 		return (
-			<div className='app' style={{'backgroundColor':'grey'}}>
-				{
-					boards.map(board=>
-						<div key={board.id}>
-							<div className="boardPreview">
-								<div>{board.id}</div>
-				        <div>{board.title}</div>
-				        <div>{board.description}</div>
-				      </div>
-			        {(board.id===1)?
-			        	<Board boardId={board.id} title={board.title}/>:''}
-			      </div>
-					)
-				}
+			<div className='app row' style={{'backgroundColor':'grey'}}>
+				<div className="boardsList">		
+					{ boards.map(board=>
+							<div 
+								key={board.id} 
+								className="boardPreview"
+								onClick={(e)=>this.handleClick(board.id,e)}>
+				        <a>{board.title}</a>
+			      	</div>
+						)}
+				</div>	
+				<div className="boardContainer">
+					{ boards.map(board=>
+							(board.id===this.state.selectedId) ?
+								<Board 
+									key={board.id}
+									boardId={board.id}
+									board={board}/>:
+								""
+						)}
+	      </div>
 			</div>
 		);
 	}
