@@ -43,19 +43,21 @@ export default class Column extends React.Component {
     const { tasks }=this.state;
     const title=(column)?column.title:"+";
     return (
-    	<div className={this.props.className}>
-        <div className="title"> 
-          <div className="vertMid">
-            {title}
+    	<div className="columnContainer">
+        <div className={"column "+(column?"":"add")}>
+          <div className="title"> 
+            <div className="vertMid">
+              {title}
+            </div>
           </div>
+          {
+            tasks.map(task=>
+              <Task 
+                key={task.id}
+                className="task" 
+                task={task}/>)
+          }
         </div>
-        {
-          tasks.map(task=>
-            <Task 
-              key={task.id}
-              className="task" 
-              task={task}/>)
-        }
       </div>
     );
   }

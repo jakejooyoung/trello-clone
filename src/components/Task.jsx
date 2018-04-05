@@ -8,11 +8,15 @@ export default class Task extends React.Component {
   render() {
   	const task=this.props.task;
     return (
-    	<div style={{'color':'blue'}}>
-          
-          <div> task id:{task.taskId} </div>
-          <div> task title:{task.title} </div>
-          <div> task description:{task.description} </div>
+    	<div className="task">
+          <div className="title"> 
+            <div className="vertMid">
+              {task.title} 
+            </div>
+          </div>
+          <div className="description"> 
+            {task.description} 
+          </div>
       </div>
     );
   }

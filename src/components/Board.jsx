@@ -38,23 +38,18 @@ export default class Board extends React.Component {
     const board=this.props.board;
     const { columns }=this.state;
     return (
-    	<div className="board" style={{'backgroundColor':'beige'}}>
-          {
-            columns.map(column=>
-              <div key={column.id} className="columnContainer">
-                <Column 
-                  className="column"
-                  column={column}
-                  boardId={board.id}
-                  />
-              </div>)
-          }
-          <div className="columnContainer">
-            <Column 
-              className="column add"
-              boardId={board.id}
-              />
-          </div>
+    	<div className="board">
+        {columns.map(column=>
+          <Column 
+            key={column.id}
+            column={column}
+            boardId={board.id}
+            />
+          )
+        }
+        <Column 
+          boardId={board.id}
+          />
       </div>
     );
   }
