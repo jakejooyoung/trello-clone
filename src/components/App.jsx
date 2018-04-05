@@ -10,6 +10,7 @@ export default class App extends React.Component {
 			boards:[],
 			selectedId:0,
 			newBoardName:'',
+			newBoardDescription:'',
 		}
 	}
 	componentDidMount() {
@@ -42,9 +43,11 @@ export default class App extends React.Component {
 
   handleSubmit(userId,event) {
   	event.preventDefault();
-  	const target = event.target;
-    const boardName = this.state.newBoardName;
-
+    const newBoard={
+    	title:this.state.newBoardName,
+    	description:this.state.newBoardDescription,
+    	userId:userId,
+    }
   	const url='api/boards/';
 	  const init = {  
 	  	method : 'POST',
@@ -52,11 +55,7 @@ export default class App extends React.Component {
 		    Accept: 'application/json',
 		    'Content-Type': 'application/json',
 		  },
-	    body:JSON.stringify({
-	    	title:boardName,
-	    	description:"Default description for now",
-	    	userId:userId,
-	    }),
+	    body:JSON.stringify(newBoard),
 	  } 
 	  const req = new Request(url, init);
     fetch(req)
@@ -66,8 +65,11 @@ export default class App extends React.Component {
         }
         return res.json();
       })
-      .then(json =>{
-      	console.log(json);
+      .then(json=> {
+      	this.setState(prevState => ({
+				  boards: [...prevState.boards, json],
+				  selectedId: json.id,
+				}))
       })
       .catch(function(err){
         console.log("ERROR! " + err)
@@ -77,45 +79,56 @@ export default class App extends React.Component {
   	this.setState({ 'selectedId' : boardId, })
   }
   handleChange(event) {
-    this.setState({'newBoardName': event.target.value});
+  	let obj={};
+  	obj[event.target.name]=event.target.value;
+    this.setState(obj);
   }
 
   // "boardsList" shows list of Boards for user.
   // "boardForm" lets users create new boards. 
 	// "<Board>" fetches all columns and tasks related to the selected boardId
 	render() {
-		const { boards }=this.state;
-		const userId=this.state.userId;
-		const selectedId=this.state.selectedId;
+		let { boards }=this.state;
+		let userId=this.state.userId;
+		let selectedId=this.state.selectedId;
 		const getClassName=(a,b)=>"boardPreview "+(a===b?"selected":"");
-		console.log("HELLO");
 		return (
 			<div className='app' style={{'backgroundColor':'grey'}}>
-				<div className="boardsList">		
-					{ boards.map(board=>
-							<div 
-								key={board.id} 
-								className={getClassName(board.id,selectedId)}
-								onClick={(e)=>this.handleClick(board.id,e)}>
-				        <a>{board.title}</a>
-			      	</div>
-						)}
-					<form 
-						className="boardForm"
-						onSubmit={this.props.onSubmit} 
-						method="POST">
-						<input 
-							name="boardName"
-							placeholder="Enter a new board name"
-							onChange={(e)=>this.handleChange(e)}/>
-						<button 
-							type="submit" 
-							value="Submit" 
-							name="createBoard" 
-							onClick={(e)=>this.handleSubmit(userId,e)}/>
-					</form>
-				</div>	
-
+				<div className="leftMenuContainer">
+					<div className="boardsList">		
+						{ boards.map(board=>{
+								return <div 
+									key={board.id} 
+									className={getClassName(board.id,selectedId)}
+									onClick={(e)=>this.handleClick(board.id,e)}>
+					        <a>{board.title}</a>
+				      	</div>
+							})
+						}
+					</div>	
+					<div className="formContainer">
+						<form 
+							className="boardForm"
+							onSubmit={this.props.onSubmit} 
+							method="POST">
+							<input 
+								name="newBoardName"
+								placeholder="Enter a new board name"
+								onChange={(e)=>this.handleChange(e)}/>
+							<input 
+								name="newBoardDescription"
+								placeholder="Describe the board"
+								onChange={(e)=>this.handleChange(e)}/>
+							<button 
+								type="submit" 
+								value="Submit" 
+								name="boardSubmit" 
+								onClick={(e)=>this.handleSubmit(userId,e)}> 
+								Create Board
+							</button>
+						</form>
+					</div>
+				</div>
 				<div className="boardContainer">
 					{ boards.map(board=>
 							(board.id===selectedId) ?
