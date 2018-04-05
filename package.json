@@ -17,6 +17,7 @@
     "mysql2": "^1.5.3",
     "path": "^0.12.7",
     "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-addons-update": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-icons": "^2.2.3",

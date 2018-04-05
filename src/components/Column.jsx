@@ -1,5 +1,6 @@
 import React from "react";
 import Task from "./Task.jsx"
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; 
 
 export default class Column extends React.Component {
   // Column has Tasks
@@ -8,6 +9,18 @@ export default class Column extends React.Component {
     this.state = {
       tasks:[],
     }
+    this.addTask = this.addTask.bind(this)
+  }
+
+  addTask() {
+    const taskPlaceholder={ 
+      id:'placeholder',
+      title:'Enter a title for this task',
+      description:'What is this task about?'
+    }
+    this.setState(prevState=>({
+      tasks:[...prevState.tasks,taskPlaceholder]
+    }));
   }
 
   componentDidMount(event) {
@@ -31,7 +44,7 @@ export default class Column extends React.Component {
           console.log(res);
           return res.json();
         })
-        .then(json => this.setState({ 'tasks' : json, }))
+        .then(json => this.setState({ tasks : json, }))
         .catch(err => console.log("ERROR! " + err ))
     }
     // If not, render just the placeholder ui.
@@ -40,26 +53,32 @@ export default class Column extends React.Component {
   render() {
     // Column-view contains Tasks
     const column=this.props.column;
-    const { tasks }=this.state;
     const title=(column)?column.title:"+";
+
+    const tasks = this.state.tasks.map( (task,i) => (
+      <Task key={task.id.toString()} className="task" task={task}/>
+    ));
+    const reverse=tasks.reverse();
+
     return (
     	<div className="columnContainer">
         <div className={"column "+(column?"":"add")}>
           <div className="title"> 
-            <div className="addButton">
+            <div className="addButton" onClick={this.addTask}>
               +
             </div>
             <div className="vertMid">
               {title}
             </div>
           </div>
-          {
-            tasks.map(task=>
-              <Task 
-                key={task.id}
-                className="task" 
-                task={task}/>)
-          }
+          <ReactCSSTransitionGroup
+            transitionName="example"
+            transitionAppear={true}
+            transitionAppearTimeout={500}
+            transitionEnter={true}
+            transitionLeave={true}>
+            {reverse}
+          </ReactCSSTransitionGroup>  
         </div>
       </div>
     );
