@@ -12,6 +12,10 @@ router.get('/', (req, res, next) => {
   if (!parentParam) {
     res.redirect('/users');
   }
+  // if (req.method==="POST"){
+  //   res.send(200);
+  // }
+  console.log("============================");
   const asy = async () => {
     const boards = await models.Board.findAll({
       where: {
@@ -26,6 +30,14 @@ router.get('/', (req, res, next) => {
   };
   asy().catch(next);
 });
+
+router.route('/')
+  .post((req, res, next) => {
+    console.log(req.body);
+    models.Board.create(req.body).then((board) => {
+      res.send(board);
+    });
+  })
 
 router.route('/:boardId')
   // route specific middleware
@@ -52,6 +64,7 @@ router.route('/:boardId')
     next(new Error('not implemented'));
   })
   .post((req, res, next) => {
+    console.log(req.body);
     models.Board.create(req.body).then((board) => {
       res.send(board);
     });
