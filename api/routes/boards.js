@@ -6,36 +6,38 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const models = require('../data/models');
 
-router.get('/', (req, res, next) => {
-  // Should be checking auth, if not signed in redirect to signup.
-  const parentParam = Object.getOwnPropertyNames(req.params)[0];
-  if (!parentParam) {
-    res.redirect('/users');
-  }
-  // if (req.method==="POST"){
-  //   res.send(200);
-  // }
-  console.log("============================");
-  const asy = async () => {
-    const boards = await models.Board.findAll({
-      where: {
-        [parentParam]: {
-          [Op.eq]: req.params[parentParam],
-        },
-      },
-    });
-    if (boards) {
-      res.json(boards);
-    }
-  };
-  asy().catch(next);
-});
+router
 
 router.route('/')
+  .get((req, res, next) => {
+    // Should be checking auth, if not signed in redirect to signup.
+    const parentParam = Object.getOwnPropertyNames(req.params)[0];
+    if (!parentParam) {
+      res.redirect('/users');
+    }
+    // if (req.method==="POST"){
+    //   res.send(200);
+    // }
+    console.log("============================");
+    const asy = async () => {
+      const boards = await models.Board.findAll({
+        where: {
+          [parentParam]: {
+            [Op.eq]: req.params[parentParam],
+          },
+        },
+      });
+      if (boards) {
+        res.json(boards);
+      }
+    };
+    asy().catch(next);
+  })
   .post((req, res, next) => {
-    console.log(req.body);
     models.Board.create(req.body).then((board) => {
-      res.send(board);
+      if (board) {
+        res.json(board);
+      }
     });
   })
 
@@ -62,12 +64,6 @@ router.route('/:boardId')
   })
   .put((req, res, next) => {
     next(new Error('not implemented'));
-  })
-  .post((req, res, next) => {
-    console.log(req.body);
-    models.Board.create(req.body).then((board) => {
-      res.send(board);
-    });
   })
   .delete((req, res, next) => {
     next(new Error('not implemented'));
