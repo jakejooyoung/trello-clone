@@ -6,8 +6,14 @@ module.exports = {
         {
           board_id: 1,
           user_id: 1,
-          title: 'Contact PetCo',
+          title: 'Sales',
           description: 'Contact PetCo regarding price increase.',
+        },
+        {
+          board_id: 1,
+          user_id: 1,
+          title: 'Process check payments',
+          description: 'Call bank to process checks.',
         },
         {
           board_id: 1,

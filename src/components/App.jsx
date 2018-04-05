@@ -13,7 +13,7 @@ export default class App extends React.Component {
 	componentDidMount() {
 		// Let's assume we're signed in as user with id: 3 for now.
 		// Get all boards for user 3
-	  const url='api/users/3/boards/';
+	  const url='api/users/1/boards/';
 	  const init = {  
 	  	method : 'GET',
 	    headers: new Headers({
