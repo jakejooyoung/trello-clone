@@ -6,27 +6,33 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const models = require('../data/models');
 
-router.get('/', (req, res, next) => {
-  // Should be checking auth, if not signed in redirect to signup.
-  const parentParam = Object.getOwnPropertyNames(req.params)[0];
-  if (!parentParam) {
-    res.redirect('/users');
-  }
-  const asy = async () => {
-    const columns = await models.Column.findAll({
-      where: {
-        [parentParam]: {
-          [Op.eq]: req.params[parentParam],
-        },
-      },
-    });
-    if (columns) {
-      res.send(columns);
+router.route('/')
+  .get((req, res, next) => {
+    const parentParam = Object.getOwnPropertyNames(req.params)[0];
+    if (!parentParam) {
+      res.redirect('/users');
     }
-  };
-  asy().catch(next);
-});
-
+    const asy = async () => {
+      const columns = await models.Column.findAll({
+        where: {
+          [parentParam]: {
+            [Op.eq]: req.params[parentParam],
+          },
+        },
+      });
+      if (columns) {
+        res.send(columns);
+      }
+    };
+    asy().catch(next);
+  })
+  .post((req, res, next) =>{
+    models.Column.create(req.body).then((column) => {
+      if (column) {
+        res.json(column);
+      }
+    });
+  })
 router.route('/:columnId')
   // route specific middleware
   .all((req, res, next) => {
