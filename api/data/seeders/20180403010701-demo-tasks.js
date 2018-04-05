@@ -7,8 +7,8 @@ module.exports = {
           board_id: 1,
           user_id: 1,
           column_id: 1,
-          title: 'Sales',
-          description: 'Contact PetCo regarding price increase.',
+          title: 'Contact PetCo regarding price increase',
+          description: '1-800-293-2390 Ext. 4392. Ask for Julie.',
         },
         {
           board_id: 1,
