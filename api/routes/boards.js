@@ -6,8 +6,6 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const models = require('../data/models');
 
-router
-
 router.route('/')
   .get((req, res, next) => {
     // Should be checking auth, if not signed in redirect to signup.
@@ -15,10 +13,6 @@ router.route('/')
     if (!parentParam) {
       res.redirect('/users');
     }
-    // if (req.method==="POST"){
-    //   res.send(200);
-    // }
-    console.log("============================");
     const asy = async () => {
       const boards = await models.Board.findAll({
         where: {
