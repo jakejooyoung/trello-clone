@@ -34,7 +34,7 @@ body{
 		padding: 0;
 		& >*{
 			border:0;
-		    border-bottom: 1px solid #bdbdbd;
+		  border-bottom: 1px solid #bdbdbd;
 			width: 100%;
 			margin: 5px 0;
 			height: 30px;
@@ -80,6 +80,7 @@ body{
 		button{
 			border: 1px solid grey;
 			margin: 2px;
+    	height: 40px;
 		}
 	}
 	.boardContainer{
@@ -112,11 +113,12 @@ body{
 }
 .column{
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-	background: #fafafa;
+	background: #ededed;
 	width: 100%;
 	border:1px solid var(--border-color);
 	border-radius:5px;
 	margin-bottom:10px;
+	min-height: 160px;
 	.title{
 		height:40px;
 		font-size:14px;
@@ -154,7 +156,7 @@ body{
 			font-color:black;
 			padding:6px 0;
 			text-align: left;
-			border-radius: 0;
+			border-radius: inherit;
 			background-color: inherit;
 	  }
 	  .description{
