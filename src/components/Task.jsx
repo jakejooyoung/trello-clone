@@ -32,15 +32,21 @@ export default class Task extends React.Component {
       if (typeof this.props.onOutfocus === 'function') {
         this.props.onOutfocus(this.props.task);
       }
-    } else if (this.state.id!=='placeholder'){
-      const url='api/task/';
+    } 
+    if (this.state.id==='placeholder'&&this.state.title&&this.state.description){
+      const newTask=this.state;
+      // console.log(newTask);
+      newTask['title']=this.state.title;
+      newTask['description']=this.state.description;
+
+      const url='api/tasks/';
       const init = {  
         method : 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        body:JSON.stringify(this.state),
+        body:JSON.stringify(newTask),
       } 
       const req = new Request(url, init);
       fetch(req)
