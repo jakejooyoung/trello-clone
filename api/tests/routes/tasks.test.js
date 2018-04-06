@@ -39,6 +39,21 @@ describe('Tasks Route', () => {
       .expect(200, done);
   });
 
+  /**
+  / POST REQUESTS
+  * */
+  it('POST request to /tasks with body should return 200 with valid Task id.', (done) => {
+    request(app)
+      .post('/tasks')
+      .send({ title:"New Name",
+              description:"New Board With New Name",
+              userId:1,
+              columnId:1,
+              boardId:1 })
+      .set('Accept', 'application/json')
+      .expect(200, done);
+  });
+
   afterAll((done) => {
     app.close();
     done();
