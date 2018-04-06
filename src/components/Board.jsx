@@ -9,9 +9,9 @@ export default class Board extends React.Component {
       columns:[],
     }
   }
-
+    
+  // Fetch Columns for Board once the board view mounts
   componentDidMount(event) {
-    // Fetch Columns for Board
     const url = 'api/boards/'+this.props.board.id+'/columns';
     const init = {  
       method : 'GET',
@@ -20,7 +20,6 @@ export default class Board extends React.Component {
         'Accept': 'application/json',
       }),
     }
-    console.log(url);
     const req = new Request(url, init);
     fetch(req)
       .then(res => {
@@ -37,16 +36,19 @@ export default class Board extends React.Component {
     // Board-view contains Columns
     const board=this.props.board;
     const { columns }=this.state;
+
+    // Get columns by board id. 
+    // Data fetched in componentDidMount.
+    const columnsByBoard=columns.map(column=>
+      <Column 
+        key={column.id}
+        column={column}
+        boardId={board.id}/>
+    )
+
     return (
     	<div className="board">
-        {columns.map(column=>
-          <Column 
-            key={column.id}
-            column={column}
-            boardId={board.id}
-            />
-          )
-        }
+        {columnsByBoard}
       </div>
     );
   }

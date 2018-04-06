@@ -29,12 +29,14 @@ router.route('/')
   })
   .post((req, res, next) => {
     delete req.body.id;
+    console.log(req.body);
     models.Task.create(req.body).then((task) => {
       if (task) {
         res.json(task);
       }
     });
   })
+  
 router.route('/:taskId')
   // route specific middleware
   .all((req, res, next) => {

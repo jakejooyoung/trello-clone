@@ -7,20 +7,20 @@
 	--border-color:#bfbfbf;
 }
 
-.example-enter {
+.taskTransitions-enter {
   opacity: 0.01;
 }
 
-.example-enter.example-enter-active {
+.taskTransitions-enter.taskTransitions-enter-active {
   opacity: 1;
   transition: opacity 500ms ease-in;
 }
 
-.example-leave {
+.taskTransitions-leave {
   opacity: 1;
 }
 
-.example-leave.example-leave-active {
+.taskTransitions-leave.taskTransitions-leave-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }
@@ -73,11 +73,14 @@ body{
   display:inline-flex;
   .leftMenuContainer{
   	min-width:var(--side-menu-width);
+  	max-width: 350px;
     padding:50px 0 20px 0;
     background: white;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    margin-left: -12px;
+    margin-right: -18px;
   }
 	.boardsList{
     width: 100%;
@@ -204,12 +207,12 @@ body{
 	  background: #fdfdfd;
 	  // color: var(--primary-color);
 	  .title,.newTaskTitle{
+	  	border-radius: inherit;
 	  	font-weight: 400;
 			font-size:14px;
 			font-color:black;
 			padding:6px 0;
 			text-align: left;
-			border-radius: inherit;
 			background-color: inherit;
 	  }
 	  .description,.newTaskDescription{
@@ -258,33 +261,4 @@ body{
 	    }
 	}	
 }
-/* Responsive */
-.card{
-    border-radius: 5px;
-    background: white;
-    padding: 10px;
-    border: 1px solid #d4d4d4;
-}
-
-/* UI GLOBALS */
-.subaction{
-	font-size: 10px;
-	color: var(--link-color, #1da1f2);
-	padding:0 7px;
-    &:hover{
-    	text-decoration: underline;
-    }
-}
-.hyperlink{
-	margin-top: 30px;
-    color: var(--link-color, #1da1f2);
-    &:hover{
-    	text-decoration: underline;
-    }
-}
-.welcomeText {
-	color:grey;
-	font-weight: 100;
-}
-
 

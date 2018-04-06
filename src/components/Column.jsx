@@ -13,10 +13,9 @@ export default class Column extends React.Component {
     this.removeTask=this.removeTask.bind(this);
   }
 
+  // If a column object was passed in as prop, fetch all Tasks for Column
   componentDidMount(event) {
-    // If a column object was passed in as a prop
     if (this.props.column){
-      // Fetch all Tasks for Column
       const url = 'api/columns/'+this.props.column.id+'/tasks';
       const init = {  
         method : 'GET',
@@ -37,9 +36,9 @@ export default class Column extends React.Component {
         .then(json => this.setState({ tasks : json, }))
         .catch(err => console.log("ERROR! " + err ))
     }
-    // If not, render just the placeholder ui.
   }
-  // Animate the adding of a new task card.
+
+  // Animate the adding of a new task.
   addTask() {
     const taskPlaceholder={ 
       id:'placeholder',
@@ -52,18 +51,24 @@ export default class Column extends React.Component {
       tasks:[...prevState.tasks,taskPlaceholder]
     }));
   }
-  // Animate the removing of an empty card onBlur from child function.
+
+  // This is a callback function reachable from Task, its child component.
+  // Removes empty card on Blur.
   removeTask(task) {
-    // console.log(this.state);
-    // console.log(task);
+
     const tasks=this.state.tasks;
+
+    // TO-DO: Placeholder id could be given unique ids so that 
+    // we can handle multiple insertions.
     this.setState({tasks: tasks.filter(function(t) { 
         return t !== task;
     })});
   }
 
   render() {
+
     // Column-view contains Tasks
+
     const column=this.props.column;
     const boardId=this.props.boardId;
     const title=(column)?column.title:"+";
@@ -92,7 +97,7 @@ export default class Column extends React.Component {
             </div>
           </div>
           <ReactCSSTransitionGroup
-            transitionName="example"
+            transitionName="taskTransitions"
             transitionAppear={false}
             transitionAppearTimeout={500}
             transitionEnterTimeout={500}
