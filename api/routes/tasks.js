@@ -6,27 +6,35 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const models = require('../data/models');
 
-router.get('/', (req, res, next) => {
-  // Should be checking auth, if not signed in redirect to signup.
-  const parentParam = Object.getOwnPropertyNames(req.params)[0];
-  if (!parentParam) {
-    res.redirect('/users');
-  }
-  const asy = async () => {
-    const tasks = await models.Task.findAll({
-      where: {
-        [parentParam]: {
-          [Op.eq]: req.params[parentParam],
-        },
-      },
-    });
-    if (tasks) {
-      res.send(tasks);
+router.route('/')
+  .get((req, res, next) => {
+    // Should be checking auth, if not signed in redirect to signup.
+    const parentParam = Object.getOwnPropertyNames(req.params)[0];
+    if (!parentParam) {
+      res.redirect('/users');
     }
-  };
-  asy().catch(next);
-});
-
+    const asy = async () => {
+      const tasks = await models.Task.findAll({
+        where: {
+          [parentParam]: {
+            [Op.eq]: req.params[parentParam],
+          },
+        },
+      });
+      if (tasks) {
+        res.send(tasks);
+      }
+    };
+    asy().catch(next);
+  })
+  .post((req, res, next) => {
+    delete req.body.id;
+    models.Task.create(req.body).then((task) => {
+      if (task) {
+        res.json(task);
+      }
+    });
+  })
 router.route('/:taskId')
   // route specific middleware
   .all((req, res, next) => {
