@@ -129,7 +129,7 @@ export default class App extends React.Component {
 						</form>
 					</div>
 				</div>
-				<div className="boardContainer">
+				<div className="boardContainer" style={{"background":"white"}}>
 					{ boards.map(board=>
 							(board.id===selectedId) ?
 								<Board 

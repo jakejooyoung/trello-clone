@@ -125,6 +125,7 @@ body{
 			display: flex;
 			flex-wrap:wrap;
     	background: white;
+    	overflow:scroll;
 		}
 	}
 }
@@ -201,7 +202,7 @@ body{
 	  background:rgba(230, 230, 230, 0.1);
 	  background: #fdfdfd;
 	  // color: var(--primary-color);
-	  .title{
+	  .title,.newTaskTitle{
 	  	font-weight: 400;
 			font-size:14px;
 			font-color:black;
@@ -210,7 +211,7 @@ body{
 			border-radius: inherit;
 			background-color: inherit;
 	  }
-	  .description{
+	  .description,.newTaskDescription{
 			font-size:11px;
 			font-color:var(--border-color);
 	  }
@@ -221,10 +222,17 @@ body{
 		&.selected{
 			border: 1px solid var(--link-color);
 	  }
+	  .flex{
+	  	display:flex;
+	  	width:100%;
+	  	input{
+	  		width: 100%;
+	  		outline: 0;
+    		border: 1px;
+	  	}
+	  }
 	}
 }
-
-
 
 .npUl{
 	.blip{

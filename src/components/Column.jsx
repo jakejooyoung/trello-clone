@@ -9,18 +9,8 @@ export default class Column extends React.Component {
     this.state = {
       tasks:[],
     }
-    this.addTask = this.addTask.bind(this)
-  }
-
-  addTask() {
-    const taskPlaceholder={ 
-      id:'placeholder',
-      title:'Enter a title for this task',
-      description:'What is this task about?'
-    }
-    this.setState(prevState=>({
-      tasks:[...prevState.tasks,taskPlaceholder]
-    }));
+    this.addTask = this.addTask.bind(this);
+    this.removeTask=this.removeTask.bind(this);
   }
 
   componentDidMount(event) {
@@ -49,16 +39,46 @@ export default class Column extends React.Component {
     }
     // If not, render just the placeholder ui.
   }
+  // Animate the adding of a new task card.
+  addTask() {
+    const taskPlaceholder={ 
+      id:'placeholder',
+      title:'',
+      description:'',
+      columnId:this.props.column.id,
+      boardId:this.props.boardId,
+    }
+    this.setState(prevState=>({
+      tasks:[...prevState.tasks,taskPlaceholder]
+    }));
+  }
+  // Animate the removing of an empty card onBlur from child function.
+  removeTask(task) {
+    // console.log(this.state);
+    // console.log(task);
+    const tasks=this.state.tasks;
+    this.setState({tasks: tasks.filter(function(t) { 
+        return t !== task;
+    })});
+  }
 
   render() {
     // Column-view contains Tasks
     const column=this.props.column;
+    const boardId=this.props.boardId;
     const title=(column)?column.title:"+";
 
     const tasks = this.state.tasks.map( (task,i) => (
-      <Task key={task.id.toString()} className="task" task={task}/>
+      <Task 
+        key={task.id.toString()} 
+        className="task" 
+        columnId={column.id} 
+        boardId={boardId}
+        onOutfocus={this.removeTask}
+        task={task}/>
     ));
-    const reverse=tasks.reverse();
+
+    const tasksReversed=tasks.reverse();
 
     return (
     	<div className="columnContainer">
@@ -73,11 +93,13 @@ export default class Column extends React.Component {
           </div>
           <ReactCSSTransitionGroup
             transitionName="example"
-            transitionAppear={true}
+            transitionAppear={false}
             transitionAppearTimeout={500}
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}
             transitionEnter={true}
             transitionLeave={true}>
-            {reverse}
+            {tasksReversed}
           </ReactCSSTransitionGroup>  
         </div>
       </div>
