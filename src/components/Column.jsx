@@ -130,7 +130,7 @@ export default class Column extends React.Component {
     const tasksReversed=tasks.reverse();
 
 
-    // Html snippet for adding a new task
+    // HTML form snippet new task input fields
     const placeholderTask=(
       <div className="task">
         <div className="title"> 
@@ -158,7 +158,7 @@ export default class Column extends React.Component {
       </div>
     )
 
-
+    // RETURN
     return (
     	<div className="columnContainer">
         <div className={"column"}>

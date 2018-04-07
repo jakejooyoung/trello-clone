@@ -79,7 +79,6 @@ export default class Board extends React.Component {
     const placeholder={ 
       id:'placeholder',
       newColumnTitle:'',
-      description:'',
       boardId:board.id,
     }
     // Get columns by board id. 
