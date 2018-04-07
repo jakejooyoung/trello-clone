@@ -7,6 +7,7 @@ export default class Board extends React.Component {
     super(props);
     this.state={
       columns:[],
+      title:"",
     }
   }
     
@@ -32,6 +33,45 @@ export default class Board extends React.Component {
       .catch(err => console.log("ERROR! " + err ))
   }
 
+  saveColumn(e) {
+    if (this.state.title){
+      const url='api/columns/';
+      const init = {  
+        method : 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({title:this.state.title,boardId:this.props.board.id}),
+      };
+      const req = new Request(url, init);
+      // Submit the POST request then setState using returned db id.
+      fetch(req)
+        .then(res => {
+          if (res.status >= 400) {
+            throw new Error("Bad response from server");
+          }
+          return res.json();
+        })
+        .then(json=> {
+          console.log(json.id);
+          this.setState(prevState=>({
+            columns:[...prevState.columns,json],
+            title:"",
+          }));
+        })
+        .catch(function(err){
+          console.log("ERROR! " + err)
+        });
+    }
+  } 
+
+  handleInput(event){
+    const obj={};
+    obj[event.target.name]=event.target.value;
+    this.setState(obj);
+  }
+
   render() {
     // Board-view contains Columns
     const board=this.props.board;
@@ -51,14 +91,14 @@ export default class Board extends React.Component {
         boardId={board.id}/>
     )
     const placeholderColumn=(
-      <form className="columnContainer">
+      <div className="columnContainer placeholderColumn">
         <div className={"column"}>
           <div className="title"> 
           <div className="vertMid">
             <input id="title"
               name="title"
               placeholder="Enter Column Name"
-              value={this.state.newColumnTitle}
+              value={this.state.title}
               onChange={(e)=> this.handleInput(e)} autoFocus/>
             </div>
             <div className="addButton columnAdd" 
@@ -66,7 +106,7 @@ export default class Board extends React.Component {
             </div>
           </div>
         </div>
-      </form>
+      </div>
     )
 
     return (

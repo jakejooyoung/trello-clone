@@ -28,6 +28,7 @@ router.route('/')
   })
   .post((req, res, next) =>{
     models.Column.create(req.body).then((column) => {
+      console.log(req.body);
       if (column) {
         res.json(column);
       }
