@@ -2,6 +2,8 @@
 
 ### What is this repository for? ###
 
+![alt text](trello-clone-screenshot.png)
+
 This is a Trello Mockup implemented using React, SCSS, Express, and MySQL.
 
 #### 1. Clone repo ###
@@ -23,20 +25,20 @@ Your DB configuration must look like this.
 ```
 //.env
 
-DB_USERNAME='root'
-DB_PASSWORD='root'
-DB_HOST='localhost'
-DB_NAME='trello-devdb'
-DB_DIALECT: 'mysql'
+	DB_USERNAME='root'
+	DB_PASSWORD='root'
+	DB_HOST='localhost'
+	DB_NAME='trello-devdb'
+	DB_DIALECT: 'mysql'
 ```
 
 #### 4. Initialize DB: Migrate and Seed  ###
 
 ```
-yarn install
-node_modules/.bin/sequelize db:create
-node_modules/.bin/sequelize db:migrate
-node_modules/.bin/sequelize db:seed:all
+	yarn install
+	node_modules/.bin/sequelize db:create
+	node_modules/.bin/sequelize db:migrate
+	node_modules/.bin/sequelize db:seed:all
 
 ```
 
@@ -52,7 +54,6 @@ node_modules/.bin/sequelize db:seed:all
 	$ yarn api 
 ```
 
-![alt text](trello-clone-screenshot.png)
 
 ##### Who do I talk to? ####
 * Jake Kim - jakejooyoung@gmail.com
