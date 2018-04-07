@@ -126,28 +126,8 @@ export default class Column extends React.Component {
     ));
 
     const tasksReversed=tasks.reverse();
-
-    return (
-    	<div className="columnContainer">
-        <div className={"column "+(column?"":"add")}>
-          <div className="title"> 
-            <div className="addButton" onClick={(e)=>this.showForm(e)}>
-              +
-            </div>
-            <div className="vertMid">
-              {column.title}
-            </div>
-          </div>
-          <ReactCSSTransitionGroup
-            transitionName="taskTransitions"
-            transitionAppear={false}
-            transitionAppearTimeout={500}
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}
-            transitionEnter={true}
-            transitionLeave={false}>
-            { (this.state.showForm ?
-              <div className="task">
+    const placeholderTask=(
+      <div className="task">
                 <div className="title"> 
                   <div className="vertMid">
                     <div className="flex">
@@ -170,8 +150,27 @@ export default class Column extends React.Component {
                       onBlur={(e)=> this.validateForm(e)}/>
                   </div>
                 </div>
-              </div> : "") 
-            }
+              </div>)
+    return (
+    	<div className="columnContainer">
+        <div className={"column "+(column?"":"add")}>
+          <div className="title"> 
+            <div className="addButton" onClick={(e)=>this.showForm(e)}>
+              +
+            </div>
+            <div className="vertMid">
+              {column.title}
+            </div>
+          </div>
+          <ReactCSSTransitionGroup
+            transitionName="taskTransitions"
+            transitionAppear={false}
+            transitionAppearTimeout={500}
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}
+            transitionEnter={true}
+            transitionLeave={false}>
+            { (this.state.showForm ? placeholderTask : "") }
             {tasksReversed}
           </ReactCSSTransitionGroup>  
         </div>
