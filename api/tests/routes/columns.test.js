@@ -15,7 +15,11 @@ describe('Columns Route', () => {
       .get('/columns/1')
       .expect(200, done);
   });
-
+  it('GET boards/:boardId/columns should return columns with boardId', (done) => {
+    request(app)
+      .get('/boards/1/columns')
+      .expect(200, done);
+  });
   /**
   / NESTED ROUTES
   * */

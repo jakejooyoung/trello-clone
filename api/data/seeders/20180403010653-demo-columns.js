@@ -11,12 +11,6 @@ module.exports = {
         },
         {
           board_id: 1,
-          user_id: 1,
-          title: 'Business',
-          description: 'Description of Business',
-        },
-        {
-          board_id: 1,
           user_id: 2,
           title: 'Pet Food',
           description: 'Description of Pet Food.',

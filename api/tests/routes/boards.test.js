@@ -6,12 +6,12 @@ describe('Boards Route', () => {
   / BASIC ROUTES
   * */
 
-  it('GET /boards should redirect to /users', (done) => {
-    request(app)
-      .get('/boards')
-      .expect('Location', '/users')
-      .expect(302, done);
-  });
+  // it('GET /boards should redirect to /users', (done) => {
+  //   request(app)
+  //     .get('/boards')
+  //     .expect('Location', '/users')
+  //     .expect(302, done);
+  // });
 
   it('GET /boards/:boardId should return board with boardId.', (done) => {
     request(app)
