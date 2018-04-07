@@ -9,8 +9,8 @@ export default class Column extends React.Component {
     this.state = {
       tasks:[],
       showForm:false,
-      title:"",
-      description:""
+      newTaskTitle:"",
+      newTaskDescription:""
     }
   }
 
@@ -41,8 +41,8 @@ export default class Column extends React.Component {
 
   saveTask() {
     const form={
-      title:this.state.title,
-      description:this.state.description,
+      title:this.state.newTaskTitle,
+      description:this.state.newTaskDescription,
       columnId:this.props.column.id,
       boardId:this.props.boardId,
       userId:1,
@@ -69,8 +69,8 @@ export default class Column extends React.Component {
         console.log(json.id);
         this.setState(prevState=>({
           tasks:[...prevState.tasks,json],
-          title:"",
-          description:"",
+          newTaskTitle:"",
+          newTaskDescription:"",
           showForm:false
         }));
       })
@@ -81,21 +81,22 @@ export default class Column extends React.Component {
 
   // validate input
   validateForm(event){
-    if (event.target.name==="title"&&this.state.title&&!this.state.description){
-      document.getElementById("description").focus();
+    if (event.target.name==="title"&&this.state.newTaskTitle&&!this.state.newTaskDescription){
+      document.getElementById("newTaskDescription").focus();
     }
-    if (event.target.name==="description"&&this.state.description&&!this.state.title){
-      document.getElementById("title").focus();
+    if (event.target.name==="description"&&this.state.newTaskDescription&&!this.state.newTaskTitle){
+      document.getElementById("newTaskTitle").focus();
     }
-    if (event.target.name==="title"&&!this.state.title && !this.state.description){
+    if (event.target.name==="title"&&!this.state.newTaskTitle && !this.state.newTaskDescription){
       this.hideForm();
     }
-    if (this.state.title&&this.state.description){
+    if (this.state.newTaskTitle&&this.state.newTaskDescription){
       this.saveTask();
     }
   }
 
   handleInput(event){
+    console.log(event.target.name+"dfdf");
     const obj={};
     obj[event.target.name]=event.target.value;
     this.setState(obj);
@@ -135,10 +136,10 @@ export default class Column extends React.Component {
         <div className="title"> 
           <div className="vertMid">
             <div className="flex">
-              <input id="title"
-                name="title"
+              <input id="newTaskTitle"
+                name="newTaskTitle"
                 placeholder="What's next?"
-                value={this.state.title}
+                value={this.state.newTaskTitle}
                 onChange={(e)=> this.handleInput(e)} 
                 onBlur={(e)=> this.validateForm(e)} autoFocus/>
             </div>
@@ -146,10 +147,10 @@ export default class Column extends React.Component {
         </div>
         <div className="description"> 
           <div className="flex">
-            <input id="description"
-              name="description"
+            <input id="newTaskDescription"
+              name="newTaskDescription"
               placeholder="What should you remember about this task?"
-              value={this.state.description}
+              value={this.state.newTaskDescription}
               onChange={(e)=> this.handleInput(e)} 
               onBlur={(e)=> this.validateForm(e)}/>
           </div>

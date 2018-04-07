@@ -66,30 +66,6 @@ export default class Task extends React.Component {
           </div>
       </div>
     )
-    // A placeholder "card" for creating new tasks
-    // const taskForm=(
-    //   <div className="task">
-    //       <div className="title"> 
-    //         <div className="vertMid">
-    //           <div className="flex">
-    //             <input
-    //               name="title"
-    //               placeholder="What's next?"
-    //               onChange={(e)=> this.handleChange(e)} 
-    //               onBlur={this.collapse} autoFocus/>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className="description"> 
-    //         <div className="flex">description
-    //           <input name="description"
-    //               placeholder="What should you remember about this task?"
-    //               onChange={(e)=> this.handleChange(e)} 
-    //               onBlur={this.collapse}/>
-    //         </div>
-    //       </div>
-    //   </div>
-    // )
     return (this.state.id==="placeholder"?taskForm:task)
   }
 }
