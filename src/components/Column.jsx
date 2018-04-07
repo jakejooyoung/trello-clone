@@ -14,7 +14,7 @@ export default class Column extends React.Component {
     }
   }
 
-  // fetch data and initialize tasks
+  // Fetches data and initializes list of tasks
   componentDidMount(event) {
     if (this.props.column){
       const url = 'api/columns/'+this.props.column.id+'/tasks';
@@ -39,6 +39,8 @@ export default class Column extends React.Component {
     }
   }
 
+  // Sends a POST request to save new task,
+  // and then updates state
   saveTask() {
     const form={
       title:this.state.newTaskTitle,
@@ -79,8 +81,11 @@ export default class Column extends React.Component {
       });
   }   
 
-  // validate input
+  // On a onBlur event, we validate input and either 
+  // save or hide the form component for creating a new task.
   validateForm(event){
+    const title=this.state.newTaskTitle;
+    const description=this.state.newDescription;
     if (event.target.name==="title"&&this.state.newTaskTitle&&!this.state.newTaskDescription){
       document.getElementById("newTaskDescription").focus();
     }
@@ -108,29 +113,27 @@ export default class Column extends React.Component {
   showForm(e){
     this.setState({showForm:true})
   }
-  collapse(){
 
-  }
+
+  // Column-view contains list of Tasks with a given columnId 
+  // and a form for creating a new Task 
   render() {
-    // Column-view contains Tasks
     const column=this.props.column;
-    const boardId=this.props.boardId;
     const title=(column)?column.title:"+";
 
-
-    // Format array of tasks
+    // Generates the list of Tasks
     const tasks = this.state.tasks.map( (task,i) => (
       <Task 
         key={task.id.toString()} 
         className="task" 
         columnId={column.id} 
-        boardId={boardId}
+        boardId={this.props.boardId}
         task={task}/>
     ));
     const tasksReversed=tasks.reverse();
 
 
-    // HTML form snippet new task input fields
+    // Form for a POST request
     const placeholderTask=(
       <div className="task">
         <div className="title"> 
@@ -158,7 +161,10 @@ export default class Column extends React.Component {
       </div>
     )
 
-    // RETURN
+    // Returns 1 container for 1 column id
+    // Each column consists of 
+    // (1) A form for a new task creation
+    // (2) A list of all Tasks for column id.
     return (
     	<div className="columnContainer">
         <div className={"column"}>

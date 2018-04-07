@@ -11,8 +11,11 @@ export default class Board extends React.Component {
     }
   }
     
-  // Fetch Columns for Board once the board view mounts
+  // Fetches data and initializes list of columns
   componentDidMount(event) {
+
+    //
+
     const url = 'api/boards/'+this.props.board.id+'/columns';
     const init = {  
       method : 'GET',
@@ -22,6 +25,9 @@ export default class Board extends React.Component {
       }),
     }
     const req = new Request(url, init);
+
+    //
+
     fetch(req)
       .then(res => {
         if (res.status >= 400) {
@@ -31,8 +37,11 @@ export default class Board extends React.Component {
       })
       .then(json => this.setState({ 'columns' : json, }))
       .catch(err => console.log("ERROR! " + err ))
+
   }
 
+  // Sends a POST request to save the new column,
+  // and then updates state
   saveColumn(e) {
     if (this.state.newColumnTitle){
       const url='api/columns/';
@@ -45,7 +54,7 @@ export default class Board extends React.Component {
         body:JSON.stringify({title:this.state.newColumnTitle,boardId:this.props.board.id}),
       };
       const req = new Request(url, init);
-      // Submit the POST request then setState using returned db id.
+
       fetch(req)
         .then(res => {
           if (res.status >= 400) {
@@ -72,8 +81,9 @@ export default class Board extends React.Component {
     this.setState(obj);
   }
 
+  // Board-view contains list of Columns with a given boardId
+  // and a form for creating a new Column 
   render() {
-    // Board-view contains Columns
     const board=this.props.board;
     const { columns }=this.state;
     const placeholder={ 
@@ -81,14 +91,16 @@ export default class Board extends React.Component {
       newColumnTitle:'',
       boardId:board.id,
     }
-    // Get columns by board id. 
-    // Data fetched in componentDidMount.
+
+    // List of Columns
     const columnsByBoard=columns.map(column=>
       <Column 
         key={column.id}
         column={column}
         boardId={board.id}/>
     )
+
+    // Form for a POST request
     const placeholderColumn=(
       <div className="columnContainer placeholderColumn">
         <div className={"column"}>

@@ -13,9 +13,15 @@ export default class App extends React.Component {
 			newBoardDescription:'',
 		}
 	}
+
+	/*
+	/  Our /users route hasn't been implemented yet so let us 
+	/  assume we're signed in as user with id: 1 for now.
+	/  All routes other than /users require a parent param so 
+	/  This won't work without a userId.
+  */
 	componentDidMount() {
-		// Let's assume we're signed in as user with id: 3 for now.
-		// Get all boards for user 3
+
 	  const url='api/users/'+this.state.userId+'/boards/';
 	  const init = {  
 	  	method : 'GET',
@@ -25,6 +31,7 @@ export default class App extends React.Component {
 			}),
 	  }
 	  const req = new Request(url, init);
+
     fetch(req)
       .then(res => {
         if (res.status >= 400) {
@@ -41,8 +48,11 @@ export default class App extends React.Component {
 
   }
 
+  // Sends a POST request to save the new board,
+  // and then updates state
   handleSubmit(userId,event) {
   	event.preventDefault();
+
     const newBoard={
     	title:this.state.newBoardName,
     	description:this.state.newBoardDescription,
@@ -58,6 +68,7 @@ export default class App extends React.Component {
 	    body:JSON.stringify(newBoard),
 	  } 
 	  const req = new Request(url, init);
+
     fetch(req)
       .then(res => {
         if (res.status >= 400) {
@@ -74,19 +85,25 @@ export default class App extends React.Component {
       .catch(function(err){
         console.log("ERROR! " + err)
       });
+
   }
+
   handleClick(boardId){
   	this.setState({ 'selectedId' : boardId, })
   }
+
   handleChange(event) {
   	let obj={};
   	obj[event.target.name]=event.target.value;
     this.setState(obj);
   }
 
-  // "boardsList" shows list of Boards for user.
-  // "boardForm" lets users create new boards. 
-	// "<Board>" fetches all columns and tasks related to the selected boardId
+
+  /* 
+	/  App-view contains list of Boards for the given userId,
+  /  and a form for creating a new Board.
+  /  Most importantly renders the selected <Board>
+  */
 	render() {
 		let { boards }=this.state;
 		let userId=this.state.userId;
