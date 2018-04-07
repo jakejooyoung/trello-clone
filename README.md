@@ -52,6 +52,7 @@ node_modules/.bin/sequelize db:seed:all
 	$ yarn api 
 ```
 
+![alt text](trello-clone-screenshot.png)
 
 ##### Who do I talk to? ####
 * Jake Kim - jakejooyoung@gmail.com
