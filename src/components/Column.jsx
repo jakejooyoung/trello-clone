@@ -87,7 +87,7 @@ export default class Column extends React.Component {
     if (event.target.name==="description"&&this.state.description&&!this.state.title){
       document.getElementById("title").focus();
     }
-    if (event.target.name==="description"&&!this.state.title && !this.state.description){
+    if (event.target.name==="title"&&!this.state.title && !this.state.description){
       this.hideForm();
     }
     if (this.state.title&&this.state.description){
@@ -116,6 +116,8 @@ export default class Column extends React.Component {
     const boardId=this.props.boardId;
     const title=(column)?column.title:"+";
 
+
+    // Format array of tasks
     const tasks = this.state.tasks.map( (task,i) => (
       <Task 
         key={task.id.toString()} 
@@ -124,38 +126,45 @@ export default class Column extends React.Component {
         boardId={boardId}
         task={task}/>
     ));
-
     const tasksReversed=tasks.reverse();
+
+
+    // Html snippet for adding a new task
     const placeholderTask=(
       <div className="task">
-                <div className="title"> 
-                  <div className="vertMid">
-                    <div className="flex">
-                      <input id="title"
-                        name="title"
-                        placeholder="What's next?"
-                        value={this.state.title}
-                        onChange={(e)=> this.handleInput(e)} 
-                        onBlur={(e)=> this.validateForm(e)} autoFocus/>
-                    </div>
-                  </div>
-                </div>
-                <div className="description"> 
-                  <div className="flex">
-                    <input id="description"
-                      name="description"
-                      placeholder="What should you remember about this task?"
-                      value={this.state.description}
-                      onChange={(e)=> this.handleInput(e)} 
-                      onBlur={(e)=> this.validateForm(e)}/>
-                  </div>
-                </div>
-              </div>)
+        <div className="title"> 
+          <div className="vertMid">
+            <div className="flex">
+              <input id="title"
+                name="title"
+                placeholder="What's next?"
+                value={this.state.title}
+                onChange={(e)=> this.handleInput(e)} 
+                onBlur={(e)=> this.validateForm(e)} autoFocus/>
+            </div>
+          </div>
+        </div>
+        <div className="description"> 
+          <div className="flex">
+            <input id="description"
+              name="description"
+              placeholder="What should you remember about this task?"
+              value={this.state.description}
+              onChange={(e)=> this.handleInput(e)} 
+              onBlur={(e)=> this.validateForm(e)}/>
+          </div>
+        </div>
+      </div>
+    )
+
+
     return (
     	<div className="columnContainer">
-        <div className={"column "+(column?"":"add")}>
+        <div className={"column"}>
           <div className="title"> 
-            <div className="addButton" onClick={(e)=>this.showForm(e)}>
+            <div 
+              className="addButton addTask" 
+              onClick={(e)=>this.showForm(e)}> 
               +
             </div>
             <div className="vertMid">

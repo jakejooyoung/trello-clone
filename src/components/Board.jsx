@@ -51,11 +51,24 @@ export default class Board extends React.Component {
         boardId={board.id}/>
     )
     const placeholderColumn=(
-      <Column 
-        key="placeholder"
-        column={placeholder}
-        boardId={board.id}/>
+      <form className="columnContainer">
+        <div className={"column"}>
+          <div className="title"> 
+          <div className="vertMid">
+            <input id="title"
+              name="title"
+              placeholder="Enter Column Name"
+              value={this.state.newColumnTitle}
+              onChange={(e)=> this.handleInput(e)} autoFocus/>
+            </div>
+            <div className="addButton columnAdd" 
+              onClick={(e)=>this.saveColumn(e)}> Create
+            </div>
+          </div>
+        </div>
+      </form>
     )
+
     return (
     	<div className="board">
         {columnsByBoard}
