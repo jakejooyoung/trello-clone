@@ -7,7 +7,7 @@ export default class Board extends React.Component {
     super(props);
     this.state={
       columns:[],
-      title:"",
+      newColumnTitle:"",
     }
   }
     
@@ -34,7 +34,7 @@ export default class Board extends React.Component {
   }
 
   saveColumn(e) {
-    if (this.state.title){
+    if (this.state.newColumnTitle){
       const url='api/columns/';
       const init = {  
         method : 'POST',
@@ -42,7 +42,7 @@ export default class Board extends React.Component {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        body:JSON.stringify({title:this.state.title,boardId:this.props.board.id}),
+        body:JSON.stringify({title:this.state.newColumnTitle,boardId:this.props.board.id}),
       };
       const req = new Request(url, init);
       // Submit the POST request then setState using returned db id.
@@ -57,7 +57,7 @@ export default class Board extends React.Component {
           console.log(json.id);
           this.setState(prevState=>({
             columns:[...prevState.columns,json],
-            title:"",
+            newColumnTitle:"",
           }));
         })
         .catch(function(err){
@@ -78,7 +78,7 @@ export default class Board extends React.Component {
     const { columns }=this.state;
     const placeholder={ 
       id:'placeholder',
-      title:'',
+      newColumnTitle:'',
       description:'',
       boardId:board.id,
     }
@@ -95,10 +95,10 @@ export default class Board extends React.Component {
         <div className={"column"}>
           <div className="title"> 
           <div className="vertMid">
-            <input id="title"
-              name="title"
+            <input id="newColumnTitle"
+              name="newColumnTitle"
               placeholder="Enter Column Name"
-              value={this.state.title}
+              value={this.state.newColumnTitle}
               onChange={(e)=> this.handleInput(e)} autoFocus/>
             </div>
             <div className="addButton columnAdd" 

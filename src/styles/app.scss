@@ -187,8 +187,11 @@ body{
 	    font-weight: initial;
 	    font-weight: 100;
 	    &.columnAdd{
-				margin-top: 13px;
+				margin-top: 14px;
 				font-size: 12px;
+				margin-right:2px;
+				font-weight: 400;
+				height:18px;
 			}
 		}
 		.addTask:hover{
