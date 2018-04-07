@@ -83,27 +83,46 @@ export default class Column extends React.Component {
 
   // On a onBlur event, we validate input and either 
   // save or hide the form component for creating a new task.
-  validateForm(event){
-    const title=this.state.newTaskTitle;
-    const description=this.state.newDescription;
-    if (event.target.name==="title"&&this.state.newTaskTitle&&!this.state.newTaskDescription){
-      document.getElementById("newTaskDescription").focus();
-    }
-    if (event.target.name==="description"&&this.state.newTaskDescription&&!this.state.newTaskTitle){
-      document.getElementById("newTaskTitle").focus();
-    }
-    if (event.target.name==="title"&&!this.state.newTaskTitle && !this.state.newTaskDescription){
-      this.hideForm();
-    }
-    if (this.state.newTaskTitle&&this.state.newTaskDescription){
+  validateForm(e){
+    console.log(e.target.name)
+        console.log(this.state.mouseDown)
+    let title=this.state.newTaskTitle;
+    let description=this.state.newTaskDescription;
+    
+    const origin=e.target.name; //onBlur's trigger source
+    const clickedSiblingNext=this.state.mouseDown; //Did the user trigger onBlur while accessing sibling input field?
+    console.log(title+"title"+description+"de"+clickedSiblingNext);
+    if (title && description && !clickedSiblingNext){
+
       this.saveTask();
+      console.log("here");
+
+    } else {
+      if (origin==="newTaskTitle"){
+        if (!description){
+          document.getElementById("newTaskDescription").focus();
+        }
+      } 
+
+      if (origin==="newTaskDescription"){
+        if (!title && !description && !clickedSiblingNext){
+          this.hideForm();
+        }
+      }
     }
   }
-
-  handleInput(event){
-    console.log(event.target.name+"dfdf");
+  mouseDownHandler(mouse, e){
+    console.log(mouse);
+    if (mouse==="down"){
+      this.state.mouseDown=true;
+    } else {
+      this.state.mouseDown=false;
+    }
+  }
+  handleInput(e){
+    console.log(e.target.name+"dfdf");
     const obj={};
-    obj[event.target.name]=event.target.value;
+    obj[e.target.name]=e.target.value;
     this.setState(obj);
   }
 
@@ -143,6 +162,8 @@ export default class Column extends React.Component {
                 name="newTaskTitle"
                 placeholder="What's next?"
                 value={this.state.newTaskTitle}
+                onMouseDown={(e)=>this.mouseDownHandler('down',e)}
+                onMouseUp={(e)=>this.mouseDownHandler('up',e)}
                 onChange={(e)=> this.handleInput(e)} 
                 onBlur={(e)=> this.validateForm(e)} autoFocus/>
             </div>
@@ -154,6 +175,8 @@ export default class Column extends React.Component {
               name="newTaskDescription"
               placeholder="What should you remember about this task?"
               value={this.state.newTaskDescription}
+              onMouseDown={(e)=>this.mouseDownHandler('down',e)}
+              onMouseUp={(e)=>this.mouseDownHandler('up',e)}
               onChange={(e)=> this.handleInput(e)} 
               onBlur={(e)=> this.validateForm(e)}/>
           </div>
