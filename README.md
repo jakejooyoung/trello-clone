@@ -24,34 +24,33 @@ Your DB configuration must look like this.
 
 ```
 //.env
-
-	DB_USERNAME='root'
-	DB_PASSWORD='root'
-	DB_HOST='localhost'
-	DB_NAME='trello-devdb'
-	DB_DIALECT: 'mysql'
+DB_USERNAME='root'
+DB_PASSWORD='root'
+DB_HOST='localhost'
+DB_NAME='trello-devdb'
+DB_DIALECT: 'mysql'
 ```
 
 #### 4. Initialize DB: Migrate and Seed  ###
 
 ```
-	yarn install
-	node_modules/.bin/sequelize db:create
-	node_modules/.bin/sequelize db:migrate
-	node_modules/.bin/sequelize db:seed:all
+yarn install
+node_modules/.bin/sequelize db:create
+node_modules/.bin/sequelize db:migrate
+node_modules/.bin/sequelize db:seed:all
 
 ```
 
 #### 5. Start a Webpack Server ###
 
 ```
-	$ yarn start
+$ yarn start
 ```
 
 
 #### 6. Start an Express Server ###
 ```
-	$ yarn api 
+$ yarn api 
 ```
 
 
