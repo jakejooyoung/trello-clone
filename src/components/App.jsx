@@ -80,6 +80,8 @@ export default class App extends React.Component {
       	this.setState(prevState => ({
 				  boards: [...prevState.boards, json],
 				  selectedId: json.id,
+				  newBoardName:"",
+				  newBoardDescription:""
 				}))
       })
       .catch(function(err){
@@ -109,6 +111,7 @@ export default class App extends React.Component {
 		let userId=this.state.userId;
 		let selectedId=this.state.selectedId;
 		const getClassName=(a,b)=>"boardPreview "+(a===b?"selected":"");
+
 		return (
 			<div className='app' style={{'backgroundColor':'grey'}}>
 				<div className="leftMenuContainer">
@@ -130,10 +133,12 @@ export default class App extends React.Component {
 							method="POST">
 							<input 
 								name="newBoardName"
+								value={this.state.newBoardName}
 								placeholder="Enter a new board name"
 								onChange={(e)=>this.handleChange(e)}/>
 							<input 
 								name="newBoardDescription"
+								value={this.state.newBoardDescription}
 								placeholder="Describe the board"
 								onChange={(e)=>this.handleChange(e)}/>
 							<button 
