@@ -28,7 +28,9 @@ router.route('/')
     asy().catch(next);
   })
   .post((req, res, next) => {
-    delete req.body.id;
+    if (req.body.id){
+      delete req.body.id;
+    }
     console.log(req.body);
     models.Task.create(req.body).then((task) => {
       if (task) {
@@ -36,7 +38,7 @@ router.route('/')
       }
     });
   })
-  
+
 router.route('/:taskId')
   // route specific middleware
   .all((req, res, next) => {

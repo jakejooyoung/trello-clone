@@ -17,6 +17,8 @@ export default class Task extends React.Component {
   componentDidMount(event){
     const { task }=this.props;
     this.setState({
+      title:task.title,
+      description:task.description,
       id:task.id,
       boardId:task.boardId,
       columnId:task.columnId,
@@ -47,36 +49,7 @@ export default class Task extends React.Component {
     if (this.state.id==='placeholder'&&this.state.title&&this.state.description){
 
       // Create object to pass in as body of POST
-      const newTask=this.state;
-      newTask['title']=this.state.title;
-      newTask['description']=this.state.description;
-      const url='api/tasks/';
-      const init = {  
-        method : 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body:JSON.stringify(newTask),
-      } 
-      const req = new Request(url, init);
 
-      // Submit the POST request then setState using returned db id.
-      fetch(req)
-        .then(res => {
-          if (res.status >= 400) {
-            throw new Error("Bad response from server");
-          }
-          return res.json();
-        })
-        .then(json=> {
-          console.log(json.id);
-          this.setState({id:json.id});
-          console.log(this.state.id);
-        })
-        .catch(function(err){
-          console.log("ERROR! " + err)
-        });
     }
   }
   render() {
@@ -85,40 +58,38 @@ export default class Task extends React.Component {
       <div className="task">
           <div className="title"> 
             <div className="vertMid">
-              {this.props.task.title} 
+              {this.state.title||this.props.task.title}
             </div>
           </div>
           <div className="description"> 
-            {this.props.task.description} 
+            {this.state.description||this.props.task.description}
           </div>
       </div>
     )
     // A placeholder "card" for creating new tasks
-    const taskForm=(
-      <div className="task">
-          <div className="title"> 
-            <div className="vertMid">
-              <div className="flex">
-                <input
-                  name="title"
-                  value={this.state.title}
-                  placeholder="What's next?"
-                  onChange={(e)=> this.handleChange(e)} 
-                  onBlur={this.collapse} autoFocus/>
-              </div>
-            </div>
-          </div>
-          <div className="description"> 
-            <div className="flex">
-              <input name="description"
-                  value={this.state.description}
-                  placeholder="What should you remember about this task?"
-                  onChange={(e)=> this.handleChange(e)} 
-                  onBlur={this.collapse}/>
-            </div>
-          </div>
-      </div>
-    )
+    // const taskForm=(
+    //   <div className="task">
+    //       <div className="title"> 
+    //         <div className="vertMid">
+    //           <div className="flex">
+    //             <input
+    //               name="title"
+    //               placeholder="What's next?"
+    //               onChange={(e)=> this.handleChange(e)} 
+    //               onBlur={this.collapse} autoFocus/>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className="description"> 
+    //         <div className="flex">description
+    //           <input name="description"
+    //               placeholder="What should you remember about this task?"
+    //               onChange={(e)=> this.handleChange(e)} 
+    //               onBlur={this.collapse}/>
+    //         </div>
+    //       </div>
+    //   </div>
+    // )
     return (this.state.id==="placeholder"?taskForm:task)
   }
 }

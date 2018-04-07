@@ -8,12 +8,13 @@ export default class Column extends React.Component {
     super(props);
     this.state = {
       tasks:[],
+      showForm:false,
+      title:"",
+      description:""
     }
-    this.addTask = this.addTask.bind(this);
-    this.removeTask=this.removeTask.bind(this);
   }
 
-  // If a column object was passed in as prop, fetch all Tasks for Column
+  // fetch data and initialize tasks
   componentDidMount(event) {
     if (this.props.column){
       const url = 'api/columns/'+this.props.column.id+'/tasks';
@@ -38,37 +39,79 @@ export default class Column extends React.Component {
     }
   }
 
-  // Animate the adding of a new task.
-  addTask() {
-    const taskPlaceholder={ 
-      id:'placeholder',
-      title:'',
-      description:'',
+  saveTask() {
+    const form={
+      title:this.state.title,
+      description:this.state.description,
       columnId:this.props.column.id,
       boardId:this.props.boardId,
+      userId:1,
+    };
+    const url='api/tasks/';
+    const init = {  
+      method : 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify(form),
+    };
+    const req = new Request(url, init);
+    // Submit the POST request then setState using returned db id.
+    fetch(req)
+      .then(res => {
+        if (res.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return res.json();
+      })
+      .then(json=> {
+        console.log(json.id);
+        this.setState(prevState=>({
+          tasks:[...prevState.tasks,json],
+          title:"",
+          description:"",
+          showForm:false
+        }));
+      })
+      .catch(function(err){
+        console.log("ERROR! " + err)
+      });
+  }   
+
+  // validate input
+  validateForm(event){
+    if (event.target.name==="title"&&this.state.title&&!this.state.description){
+      document.getElementById("description").focus();
     }
-    this.setState(prevState=>({
-      tasks:[...prevState.tasks,taskPlaceholder]
-    }));
+    if (event.target.name==="description"&&this.state.description&&!this.state.title){
+      document.getElementById("title").focus();
+    }
+    if (event.target.name==="description"&&!this.state.title && !this.state.description){
+      this.hideForm();
+    }
+    if (this.state.title&&this.state.description){
+      this.saveTask();
+    }
   }
 
-  // This is a callback function reachable from Task, its child component.
-  // Removes empty card on Blur.
-  removeTask(task) {
-
-    const tasks=this.state.tasks;
-
-    // TO-DO: Placeholder id could be given unique ids so that 
-    // we can handle multiple insertions.
-    this.setState({tasks: tasks.filter(function(t) { 
-        return t !== task;
-    })});
+  handleInput(event){
+    const obj={};
+    obj[event.target.name]=event.target.value;
+    this.setState(obj);
   }
 
+  hideForm(){
+    this.setState({showForm:false})
+  }
+  showForm(e){
+    this.setState({showForm:true})
+  }
+  collapse(){
+
+  }
   render() {
-
     // Column-view contains Tasks
-
     const column=this.props.column;
     const boardId=this.props.boardId;
     const title=(column)?column.title:"+";
@@ -79,7 +122,6 @@ export default class Column extends React.Component {
         className="task" 
         columnId={column.id} 
         boardId={boardId}
-        onOutfocus={this.removeTask}
         task={task}/>
     ));
 
@@ -89,11 +131,11 @@ export default class Column extends React.Component {
     	<div className="columnContainer">
         <div className={"column "+(column?"":"add")}>
           <div className="title"> 
-            <div className="addButton" onClick={this.addTask}>
+            <div className="addButton" onClick={(e)=>this.showForm(e)}>
               +
             </div>
             <div className="vertMid">
-              {title}
+              {column.title}
             </div>
           </div>
           <ReactCSSTransitionGroup
@@ -103,7 +145,33 @@ export default class Column extends React.Component {
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}
             transitionEnter={true}
-            transitionLeave={true}>
+            transitionLeave={false}>
+            { (this.state.showForm ?
+              <div className="task">
+                <div className="title"> 
+                  <div className="vertMid">
+                    <div className="flex">
+                      <input id="title"
+                        name="title"
+                        placeholder="What's next?"
+                        value={this.state.title}
+                        onChange={(e)=> this.handleInput(e)} 
+                        onBlur={(e)=> this.validateForm(e)} autoFocus/>
+                    </div>
+                  </div>
+                </div>
+                <div className="description"> 
+                  <div className="flex">
+                    <input id="description"
+                      name="description"
+                      placeholder="What should you remember about this task?"
+                      value={this.state.description}
+                      onChange={(e)=> this.handleInput(e)} 
+                      onBlur={(e)=> this.validateForm(e)}/>
+                  </div>
+                </div>
+              </div> : "") 
+            }
             {tasksReversed}
           </ReactCSSTransitionGroup>  
         </div>

@@ -36,7 +36,12 @@ export default class Board extends React.Component {
     // Board-view contains Columns
     const board=this.props.board;
     const { columns }=this.state;
-
+    const placeholder={ 
+      id:'placeholder',
+      title:'',
+      description:'',
+      boardId:board.id,
+    }
     // Get columns by board id. 
     // Data fetched in componentDidMount.
     const columnsByBoard=columns.map(column=>
@@ -45,10 +50,16 @@ export default class Board extends React.Component {
         column={column}
         boardId={board.id}/>
     )
-
+    const placeholderColumn=(
+      <Column 
+        key="placeholder"
+        column={placeholder}
+        boardId={board.id}/>
+    )
     return (
     	<div className="board">
         {columnsByBoard}
+        {placeholderColumn}
       </div>
     );
   }
