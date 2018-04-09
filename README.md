@@ -9,7 +9,7 @@ This is a Trello Mockup implemented using React, SCSS, Express, and MySQL.
 #### 1. Clone repo ###
 
 ```
-$ git clone git@bitbucket.org:npgains/trello-mockup.git
+$ git clone git@github.com:jknpg/trello-clone.git
 ```
 
 #### 2. Install yarn package manager ###
