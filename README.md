@@ -2,7 +2,7 @@
 
 ### What is this repository for? ###
 
-![alt text](trello-clone.gif)
+![alt text](trelloClone.gif)
 
 This is a Trello Mockup implemented using React, SCSS, Express, and MySQL.
 
